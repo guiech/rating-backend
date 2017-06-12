@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface UserRepository extends CrudRepository<User, String> {
 
-    @Query("{ email :  { $regex : ?0, $options: 'i'}}")
+    @Query("{ email :  { $eq : ?0 }}")
     List<User> findByEmail(@Param("email") String email);
 
 }
