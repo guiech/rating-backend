@@ -33,11 +33,6 @@ public class StandaloneApp {
 		SpringApplication.run(StandaloneApp.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder getPasswordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
-
 	/**
 	 * Password grants are switched on by injecting an AuthenticationManager.
 	 * Here, we setup the builder so that the userDetailsService is the one we coded.
