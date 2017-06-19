@@ -3,6 +3,7 @@ package mobile.app.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,11 +17,11 @@ public class User {
 
     public String email;
     public String password;
-    private List<Role> roles;
+    private List<String> roles;
 
     public User() {}
 
-    public User(String email, String password, List<Role> roles) {
+    public User(String email, String password, List<String> roles) {
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -43,10 +44,17 @@ public class User {
     }
 
     public List<Role> getRoles() {
+        if(this.roles == null) {
+            return new ArrayList<Role>();
+        }
+        List<Role> roles = new ArrayList<Role>(this.roles.size());
+        for(String role : this.roles) {
+            roles.add(new Role(role));
+        }
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 }

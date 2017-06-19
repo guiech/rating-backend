@@ -43,10 +43,6 @@ public class StandaloneApp {
 	@Autowired
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository, UserService service) throws Exception {
 		//Setup a default user if db is empty
-		if (repository.count()==0) {
-			service.save(new User("user", "user", Arrays.asList(new Role("USER"), new Role("ACTUATOR"))));
-		}
-		System.out.println("====== COUNT ===== "+repository.count());
 		builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
 	}
 
