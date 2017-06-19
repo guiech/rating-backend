@@ -16,4 +16,7 @@ public interface UserRepository extends CrudRepository<User, String> {
     @Query("{ email :  { $eq : ?0 }}")
     List<User> findByEmail(@Param("email") String email);
 
+    @Query("{ email :  { $eq : ?0 }}")
+    User getByEmail(@Param("email") String email);
+
 }
