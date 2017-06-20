@@ -6,9 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillermoaiquel on 6/10/17.
- */
 @Document(collection = "user")
 public class User {
 

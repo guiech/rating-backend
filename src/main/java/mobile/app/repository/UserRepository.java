@@ -5,12 +5,11 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import mobile.app.model.User;
 
-/**
- * Created by guillermoaiquel on 6/10/17.
- */
+@Transactional
 public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{ email :  { $eq : ?0 }}")
