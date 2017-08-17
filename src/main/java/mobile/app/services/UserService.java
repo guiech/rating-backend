@@ -25,9 +25,4 @@ public class UserService {
         repo.save(user);
     }
 
-    public void insert(User user) {
-        user.setPassword(getPasswordEncoder().encode(user.getPassword()));
-        repo.insert(user);
-    }
-
 }
