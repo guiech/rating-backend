@@ -12,29 +12,32 @@ import mobile.app.repository.ProductRepository;
 
 @Service
 @Transactional
-public class ProductBusinessImpl implements ProductBusiness{
+public class ProductBusinessImpl implements ProductBusiness {
 	
 	@Autowired
-	private ProductRepository productRepository;
-	
+	private ProductRepository repository;
+
 	@Override
-	public List<Product> getAll() {
-		return productRepository.findAll();
+	public List<?> getProductComments(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void deleteAll() {
-		productRepository.deleteAll();
+	public List<?> getProductRate(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void save(Product entity) {
-		productRepository.save(entity);
+	public List<?> getProductsByName(String Name) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void modify(Product entity) {
-		productRepository.save(entity);
+	public Product getProductDetailsById(String productId) throws Exception{
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 }
