@@ -10,7 +10,8 @@ import java.util.List;
 @Document(collection = "user")
 public class User {
 
-    @Id
+
+	@Id
     public String id;
 
     public String name;
@@ -75,4 +76,12 @@ public class User {
     public void setRoles(List<String> roles) {
         this.roles = roles;
     }
+    
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }
