@@ -13,13 +13,11 @@ public class CommentLikes {
 	@Id
 	private String id;
 
-	private Comment comment;
+	private String commentId;
 
-	private User user;
+	private String productId;
 
 	private Integer likeStatus;
-
-	private User createBy;
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date createAt;
@@ -32,20 +30,20 @@ public class CommentLikes {
 		this.id = id;
 	}
 
-	public Comment getComment() {
-		return comment;
+	public String getCommentId() {
+		return commentId;
 	}
 
-	public void setComment(Comment comment) {
-		this.comment = comment;
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
 	}
 
-	public User getUser() {
-		return user;
+	public String getProductId() {
+		return productId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
 	public Integer getLikeStatus() {
@@ -54,14 +52,6 @@ public class CommentLikes {
 
 	public void setLikeStatus(Integer likeStatus) {
 		this.likeStatus = likeStatus;
-	}
-
-	public User getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(User createBy) {
-		this.createBy = createBy;
 	}
 
 	public Date getCreateAt() {

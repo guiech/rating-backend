@@ -22,9 +22,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     /**
      * We here defines the security constraints on the token endpoint.
      * We set it up to isAuthenticated, which returns true if the user is not anonymous

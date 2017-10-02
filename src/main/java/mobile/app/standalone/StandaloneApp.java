@@ -1,9 +1,5 @@
 package mobile.app.standalone;
 
-import mobile.app.config.CustomUserDetails;
-import mobile.app.repository.UserRepository;
-import mobile.app.services.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,15 +9,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import mobile.app.config.CustomUserDetails;
+import mobile.app.repository.UserRepository;
 
 @SpringBootApplication
 @EnableMongoRepositories({"mobile.app.repository"})
 @ComponentScan({"mobile.app"})
 public class StandaloneApp {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(StandaloneApp.class, args);
@@ -35,9 +34,9 @@ public class StandaloneApp {
 	 * @throws Exception
 	 */
 	@Autowired
-	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository, UserService service) throws Exception {
+	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository) throws Exception {
 		//Setup a default user if db is empty
-		builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
+		builder.userDetailsService(userDetailsService(repository)).passwordEncoder(this.passwordEncoder);
 	}
 
 	/**

@@ -13,13 +13,11 @@ public class ProductLikes {
 	@Id
 	private String id;
 	
-	private Product product;
-	
-	private User user;
+	private String productId;
+
+	private String userId;
 	
 	private int likeStatus;
-	
-	private User createBy;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date createAt;
@@ -32,28 +30,20 @@ public class ProductLikes {
 		this.id = id;
 	}
 
-	public Product getProduct() {
-		return product;
+	public String getProductId() {
+		return productId;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public User getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(User createBy) {
-		this.createBy = createBy;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public Date getCreateAt() {

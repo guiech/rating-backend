@@ -2,19 +2,22 @@ package mobile.app.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.mongodb.DBObject;
 
-import mobile.app.model.Comment;
 import mobile.app.model.Product;
 
 public interface ProductRestService {
 	
 	public DBObject getProductById(String productId);
 	
-	public Product saveProduct();
-	
-	public Comment saveComment();
+	public Product saveProduct(@RequestBody Product product);
 	
 	public List<Product> getAllProducts();
+	
+	public List<Product> getProductsByName(@PathVariable String name);
+	
 
 }
