@@ -10,8 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.mongodb.DBObject;
-
 @Document(collection = "product")
 public class Product {
 
@@ -32,8 +30,6 @@ public class Product {
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date createAt;
 	private List<String> images;
-	private DBObject likes;
-	private DBObject disLikes;
 
 	public String getId() {
 		return id;
@@ -131,23 +127,21 @@ public class Product {
 		this.images = images;
 	}
 
-	public DBObject getLikes() {
-		return likes;
-	}
-
-	public void setLikes(DBObject likes) {
-		this.likes = likes;
-	}
-
-	public DBObject getDisLikes() {
-		return disLikes;
-	}
-
-	public void setDisLikes(DBObject disLikes) {
-		this.disLikes = disLikes;
-	}
-
 	public Product() {
+	}
+
+	public String toString() {
+		return "ID: " + getId() + "\n"
+				+ "Name: " +getName() + "\n"
+				+ "Brand: " +getBrand() + "\n"
+				+ "Description: " +getDescription() + "\n"
+				+ "Features: " +getFeatures() + "\n"
+				+ "Comments Count: " +getCommentsCount() + "\n"
+				+ "Likes Count: " +getLikesCount() + "\n"
+				+ "Dislikes Count: " +getDislikesCount() + "\n"
+				+ "Rate: " +getRate() + "\n"
+				+ "Created By: " + getCreateBy() + "\n"
+				+ "Created At: " + getCreateAt() + "\n";
 	}
 
 }

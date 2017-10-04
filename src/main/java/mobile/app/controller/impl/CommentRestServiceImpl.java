@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import mobile.app.config.BaseContext;
-import mobile.app.controller.CommenttRestServ;
+import mobile.app.controller.CommentRestService;
 import mobile.app.model.Comment;
 
 @RestController
 @RequestMapping("/comment")
-public class CommentRestServiceImpl extends BaseContext implements CommenttRestServ{
+public class CommentRestServiceImpl extends BaseContext implements CommentRestService {
 
 	@Override
 	@RequestMapping(value ="/save",method = RequestMethod.POST)

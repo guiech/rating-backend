@@ -12,7 +12,7 @@ public interface ProductBusiness{
 	
 	public DBObject getProductDetailsById(String productId);
 	
-	public Product saveProduct(Product product);
+	public Product saveProduct(Product product, String username);
 	
 	public List<Product> getAll();
 

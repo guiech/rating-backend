@@ -18,9 +18,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable().and()
                 .authorizeRequests()
-                .antMatchers("/","/browser/**").permitAll()
+                .antMatchers("/", "/browser/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers("/users/**").authenticated()
-                .antMatchers(HttpMethod.GET,"/get").authenticated();
+                .antMatchers(HttpMethod.GET,"/get").authenticated()
+                .antMatchers(HttpMethod.POST, "/product/save").authenticated();
     }
 }

@@ -41,7 +41,7 @@ public class GenericBusiness {
 	//TODO Try to DRY the code.
 	protected User getUser() {
 		List<User> users =  userRepository.findAll();
-		return CollectionUtils.isEmpty(users) ? mockUSer() : users.get(0);
+		return CollectionUtils.isEmpty(users) ? mockUser() : users.get(0);
 	}
 	
 	protected Product getProduct() {
@@ -73,13 +73,11 @@ public class GenericBusiness {
 		product.setDescription("Description");
 		DBObject dbObject = new BasicDBObject();
 		dbObject.put("users", Arrays.asList("gaiquel@gmail.com"));
-		product.setDisLikes(dbObject);
 		product.setDislikesCount(1);
-		product.setFeatures("Feautures");
+		product.setFeatures("Features");
 		product.setImages(Arrays.asList("~/image1.jpg"));
 		dbObject = new BasicDBObject();
 		dbObject.put("users", Arrays.asList("gaiquel@gmail.com"));
-		product.setLikes(dbObject);
 		product.setLikesCount(1);
 		product.setName("product name");
 		product.setRate(new Float(5.5));
@@ -95,7 +93,7 @@ public class GenericBusiness {
 		return productLikeRepository.save(likes);
 	}
 	
-	protected User mockUSer() {
+	protected User mockUser() {
 		User user = new User();
 		user.setEmail("santiagomilanese@gmail.com");
 		user.setName("santiago");

@@ -32,7 +32,7 @@ public class ProductRestServiceImpl extends BaseContext implements ProductRestSe
 	@RequestMapping(value ="/save",method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody Product saveProduct(@RequestBody Product product) {
-		return productBusiness.saveProduct(product);		
+		return productBusiness.saveProduct(product, getAuthInformation().getName());
 	}
 
 	@Override

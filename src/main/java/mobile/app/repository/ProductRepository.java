@@ -11,4 +11,6 @@ import mobile.app.model.Product;
 public interface ProductRepository extends MongoRepository<Product, String> {
 	
 	List<Product> findByNameRegex(String name);
+
+	Product findById(String id);
 }

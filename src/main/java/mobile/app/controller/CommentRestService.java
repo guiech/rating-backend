@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import mobile.app.model.Comment;
 
-public interface CommenttRestServ {
+public interface CommentRestService {
 	
 	public Comment saveComment(@RequestBody Comment comment);
 	
