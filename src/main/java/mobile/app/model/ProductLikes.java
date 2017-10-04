@@ -3,6 +3,8 @@ package mobile.app.model;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -12,10 +14,14 @@ public class ProductLikes {
 	
 	@Id
 	private String id;
-	
-	private String productId;
 
-	private String userId;
+	@DBRef
+	@Indexed
+	private Product product;
+
+	@DBRef
+	@Indexed
+	private User user;
 	
 	private int likeStatus;
 	
@@ -30,20 +36,20 @@ public class ProductLikes {
 		this.id = id;
 	}
 
-	public String getProductId() {
-		return productId;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getCreateAt() {

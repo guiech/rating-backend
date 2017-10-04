@@ -3,6 +3,8 @@ package mobile.app.business.impl;
 import java.util.Date;
 import java.util.List;
 
+import mobile.app.model.ProductLikes;
+import mobile.app.model.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,15 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 	}
 
 	@Override
-	public DBObject getProductDetailsById(String productId) {
+	public DBObject getProductDetailsById(String productId, String username) {
 		DBObject jsonNode =  new BasicDBObject();
 		jsonNode.put("product", productRepository.findById(productId));
-		jsonNode.put("likes", getProductLike());
+		// TODO find a better way to know if user is auth or not
+		ProductLikes productLikes = null;
+		if(!username.equals("anonymousUser")) {
+			productLikes = productLikeRepository.findByUserIdAndProductId(userRepository.getByUsername(username).getId(), productId);
+		}
+		jsonNode.put("likes", productLikes != null ? productLikes.getLikeStatus() : 0);
 		return jsonNode;
 	}
 
@@ -54,5 +61,38 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 	@Override
 	public List<Product> getAll() {
 		return productRepository.findAll();
+	}
+
+	@Override
+	public DBObject like(String productId, String username, int status) {
+		DBObject result = new BasicDBObject();
+		result.put("success", true);
+		try {
+			User user = userRepository.getByUsername(username);
+			Product product = new Product();
+			product.setId(productId);
+
+			ProductLikes productLikes = productLikeRepository.findByUserIdAndProductId(user.getId(), productId);
+			if (productLikes == null && status != 0) {
+				productLikes = new ProductLikes();
+				productLikes.setLikeStatus(status);
+				productLikes.setCreateAt(new Date());
+				productLikes.setProduct(product);
+				productLikes.setUser(user);
+				productLikeRepository.save(productLikes);
+			} else {
+				// avoid updating DB if status is the same one
+				if (productLikes.getLikeStatus() != status) {
+					productLikes.setLikeStatus(status);
+					productLikes.setCreateAt(new Date());
+					productLikeRepository.save(productLikes);
+				}
+			}
+		} catch (Exception e) {
+			result.put("success", false);
+			result.put("message", e.getMessage());
+		}
+
+		return result;
 	}
 }

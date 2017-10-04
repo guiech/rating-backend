@@ -25,7 +25,28 @@ public class ProductRestServiceImpl extends BaseContext implements ProductRestSe
 	@RequestMapping(value ="/{productId}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public DBObject getProductById(@PathVariable String productId) {
-		return productBusiness.getProductDetailsById(productId);
+		return productBusiness.getProductDetailsById(productId, getAuthInformation().getName());
+	}
+
+	@Override
+	@RequestMapping(value ="/like/{productId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject like(@PathVariable String productId) {
+		return productBusiness.like(productId, getAuthInformation().getName(), 1);
+	}
+
+	@Override
+	@RequestMapping(value ="/dislike/{productId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject unlike(@PathVariable String productId) {
+		return productBusiness.like(productId, getAuthInformation().getName(), -1);
+	}
+
+	@Override
+	@RequestMapping(value ="/unlike/{productId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject removeLike(@PathVariable String productId) {
+		return productBusiness.like(productId, getAuthInformation().getName(), 0);
 	}
 
 	@Override

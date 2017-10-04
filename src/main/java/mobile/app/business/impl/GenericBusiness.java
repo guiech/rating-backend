@@ -87,8 +87,8 @@ public class GenericBusiness {
 	protected ProductLikes mockProductLike() {
 		ProductLikes likes = new ProductLikes();
 		likes.setCreateAt(new Date());
-		likes.setUserId(getUser().getId());
-		likes.setProductId(getProduct().getId());
+		likes.setUser(getUser());
+		likes.setProduct(getProduct());
 		likes.setLikeStatus(1);
 		return productLikeRepository.save(likes);
 	}

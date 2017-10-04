@@ -12,7 +12,13 @@ import mobile.app.model.Product;
 public interface ProductRestService {
 	
 	public DBObject getProductById(String productId);
-	
+
+	public DBObject like(@PathVariable String productId);
+
+	public DBObject unlike(@PathVariable String productId);
+
+	public DBObject removeLike(@PathVariable String productId);
+
 	public Product saveProduct(@RequestBody Product product);
 	
 	public List<Product> getAllProducts();
