@@ -21,13 +21,17 @@ import mobile.app.model.Product;
 public class ProductBusinessImpl extends GenericBusiness implements ProductBusiness {
 
 	@Override
-	public List<Product> getProductsByName(String name) {
+	public DBObject getProductsByName(String name) {
 		Product product = new Product();
 		product.setName(name);
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("name", ExampleMatcher.GenericPropertyMatcher.of(ExampleMatcher.StringMatcher.CONTAINING, true));
 		Example<Product> example = Example.of(product, matcher);
-		return productRepository.findAll(example);
+		DBObject jsonNode = new BasicDBObject();
+		List list = productRepository.findAll(example);
+		jsonNode.put("count", list.size());
+		jsonNode.put("products", list);
+		return jsonNode;
 //		return productRepository.findByNameRegex(".*"+name+".*");
 	}
 
@@ -59,8 +63,12 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 	}
 	
 	@Override
-	public List<Product> getAll() {
-		return productRepository.findAll();
+	public DBObject getAll() {
+		DBObject jsonNode = new BasicDBObject();
+		List products = productRepository.findAll();
+		jsonNode.put("count", products.size());
+		jsonNode.put("products", products);
+		return jsonNode;
 	}
 
 	@Override

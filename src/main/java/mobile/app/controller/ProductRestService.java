@@ -21,9 +21,9 @@ public interface ProductRestService {
 
 	public Product saveProduct(@RequestBody Product product);
 	
-	public List<Product> getAllProducts();
+	public DBObject getAllProducts();
 	
-	public List<Product> getProductsByName(@PathVariable String name);
+	public DBObject getProductsByName(@PathVariable String name);
 	
 
 }

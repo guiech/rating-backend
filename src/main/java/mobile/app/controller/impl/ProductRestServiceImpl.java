@@ -59,14 +59,14 @@ public class ProductRestServiceImpl extends BaseContext implements ProductRestSe
 	@Override
 	@RequestMapping(value ="/getAll",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<Product> getAllProducts() {
+	public DBObject getAllProducts() {
 		return productBusiness.getAll();
 	}
 
 	@Override
 	@RequestMapping(value ="/byName/{name}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<Product> getProductsByName(@PathVariable String name) {
+	public DBObject getProductsByName(@PathVariable String name) {
 		return productBusiness.getProductsByName(name);
 	}
 }
