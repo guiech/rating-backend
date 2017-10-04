@@ -18,4 +18,7 @@ public interface UserRepository extends MongoRepository<User, String> {
     @Query("{ email :  { $eq : ?0 }}")
     User getByEmail(@Param("email") String email);
 
+    @Query("{ username : { $eq : ?0}}")
+    User getByUsername(@Param("username") String username);
+
 }

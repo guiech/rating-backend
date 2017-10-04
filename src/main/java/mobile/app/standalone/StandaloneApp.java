@@ -48,7 +48,7 @@ public class StandaloneApp {
 		return new UserDetailsService() {
 			@Override
 			public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-				return new CustomUserDetails(repository.getByEmail(s));
+				return new CustomUserDetails(repository.getByUsername(s));
 			}
 		};
 	}

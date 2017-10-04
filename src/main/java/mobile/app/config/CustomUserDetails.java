@@ -15,10 +15,10 @@ public class CustomUserDetails implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
     private String password;
-    private String email;
+    private String username;
 
     public CustomUserDetails(User user) {
-        this.email = user.getEmail();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = translate(user.getRoles());
     }
@@ -53,7 +53,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
