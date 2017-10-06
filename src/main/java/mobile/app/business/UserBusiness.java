@@ -3,6 +3,7 @@ package mobile.app.business;
 import java.util.List;
 
 import mobile.app.model.Product;
+import mobile.app.model.User;
 
 public interface UserBusiness {
 
@@ -11,5 +12,7 @@ public interface UserBusiness {
 	public void deleteSearchedProduct(String userId,String productId);
 	
 	public void saveSearchedProduct(String userId,String productId);
+	
+	public User register(User user);
 	
 }

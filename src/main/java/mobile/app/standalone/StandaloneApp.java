@@ -3,6 +3,7 @@ package mobile.app.standalone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,7 +21,8 @@ import mobile.app.repository.UserRepository;
 @ComponentScan({"mobile.app"})
 public class StandaloneApp {
 
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(StandaloneApp.class, args);
@@ -51,5 +53,10 @@ public class StandaloneApp {
 				return new CustomUserDetails(repository.getByUsername(s));
 			}
 		};
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
 	}
 }

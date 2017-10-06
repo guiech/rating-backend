@@ -26,7 +26,7 @@ public class BaseContext {
 	@Autowired
 	protected UserBusiness userBusiness;
 
-	final static Logger LOG = LoggerFactory.getLogger(BaseContext.class);
+	protected final static Logger LOG = LoggerFactory.getLogger(BaseContext.class);
 	
 	protected Authentication getAuthInformation() {
 		return SecurityContextHolder.getContext().getAuthentication();
@@ -34,8 +34,8 @@ public class BaseContext {
 	
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
-	protected void IllegalArgumentExceptionHandler(Exception e) {
-		LOG.error("IllegalArgumentException in Controller java class",e);
+	protected void ExceptionHandler(Exception e) {
+		LOG.error("Exception in Controller java class",e);
 	}
 	
 	protected DBObject mapStringToDBObject(String jsonString) {
