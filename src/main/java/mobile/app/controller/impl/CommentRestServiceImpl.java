@@ -2,6 +2,7 @@ package mobile.app.controller.impl;
 
 import java.util.List;
 
+import com.mongodb.DBObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +20,10 @@ import mobile.app.model.Comment;
 public class CommentRestServiceImpl extends BaseContext implements CommentRestService {
 
 	@Override
-	@RequestMapping(value ="/save",method = RequestMethod.POST)
+	@RequestMapping(value ="/save/{productId}",method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public Comment saveComment(@RequestBody Comment comment) {
-		return commentBusiness.saveComment(comment);
+	public DBObject saveComment(@PathVariable String productId, @RequestBody Comment comment) {
+		return commentBusiness.saveComment(comment, productId, getAuthInformation().getName());
 	}
 
 	@Override

@@ -79,6 +79,10 @@ public class Product {
 		this.commentsCount = commentsCount;
 	}
 
+	public void increaseCommentsCount() {
+		this.commentsCount++;
+	}
+
 	public Integer getLikesCount() {
 		return likesCount;
 	}

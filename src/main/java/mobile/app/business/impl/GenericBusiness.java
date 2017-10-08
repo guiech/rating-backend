@@ -57,10 +57,10 @@ public class GenericBusiness {
 	protected Comment mockComment() {
 		Comment comment = new Comment();
 		comment.setStars(4);
-		comment.setUserId(getUser().getId());
-		comment.setProductId(getProduct().getId());
-		comment.setLikes(0);
-		comment.setDisLikes(0);
+		comment.setCreateBy(getUser());
+		comment.setProduct(getProduct());
+		comment.setLikesCount(0);
+		comment.setDislikesCount(0);
 		return commentRepository.save(comment);
 	}
 	
