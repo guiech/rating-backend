@@ -37,13 +37,13 @@ public class UserBusinessImpl extends GenericBusiness implements UserBusiness {
 
 	@Override
 	public User register(User user) {
-		checkDuplicatedUser(user.getUsername());
+		checkDuplicatedUser(user.getEmail());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 	
-	private void checkDuplicatedUser(String username){
-		if(userRepository.getByUsername(username)!=null){
+	private void checkDuplicatedUser(String email){
+		if(userRepository.getByEmail(email)!=null){
 			throw new UserAlreadyRegistredException();
 		}
 	}

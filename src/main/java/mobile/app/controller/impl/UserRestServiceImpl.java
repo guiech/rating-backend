@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import mobile.app.config.BaseContext;
 import mobile.app.controller.UserRestService;
 import mobile.app.exceptions.UserAlreadyRegistredException;
@@ -27,8 +30,11 @@ public class UserRestServiceImpl extends BaseContext implements UserRestService{
 	
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(UserAlreadyRegistredException.class)
-	private void UserAlreadyRegistredExceptionHandler(UserAlreadyRegistredException e) {
+	private DBObject UserAlreadyRegistredExceptionHandler(UserAlreadyRegistredException e) {
 		LOG.error(e.getMessage(),e);
+		DBObject dbObject = new BasicDBObject();
+		dbObject.put("status", 400);
+		return dbObject;
 	}
 
 }
