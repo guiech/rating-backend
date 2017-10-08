@@ -81,20 +81,50 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 			product.setId(productId);
 
 			ProductLikes productLikes = productLikeRepository.findByUserIdAndProductId(user.getId(), productId);
-			if (productLikes == null && status != 0) {
-				productLikes = new ProductLikes();
-				productLikes.setLikeStatus(status);
-				productLikes.setCreateAt(new Date());
-				productLikes.setProduct(product);
-				productLikes.setUser(user);
-				productLikeRepository.save(productLikes);
-			} else {
-				// avoid updating DB if status is the same one
-				if (productLikes.getLikeStatus() != status) {
+			if (productLikes == null) {
+				// Save new like
+				if(status != 0) {
+					productLikes = new ProductLikes();
 					productLikes.setLikeStatus(status);
 					productLikes.setCreateAt(new Date());
+					productLikes.setProduct(product);
+					productLikes.setUser(user);
 					productLikeRepository.save(productLikes);
+					product = productRepository.findById(productId);
+					switch (status) {
+						case 1:
+							product.increaseLikeCount();
+							break;
+						case -1:
+							product.increaseDislikeCount();
+							break;
+					}
+					productRepository.save(product);
 				}
+			} else if (productLikes.getLikeStatus() != status) {
+				// avoid updating DB if status is the same one
+				// change like status
+				product = productRepository.findById(productId);
+				switch (productLikes.getLikeStatus()) {
+					case 1:
+						product.decreaseLikeCount();
+						break;
+					case -1:
+						product.decreaseDislikeCount();
+						break;
+				}
+				switch (status) {
+					case 1:
+						product.increaseLikeCount();
+						break;
+					case -1:
+						product.increaseDislikeCount();
+						break;
+				}
+				productLikes.setLikeStatus(status);
+				productLikes.setCreateAt(new Date());
+				productLikeRepository.save(productLikes);
+				productRepository.save(product);
 			}
 		} catch (Exception e) {
 			result.put("success", false);
