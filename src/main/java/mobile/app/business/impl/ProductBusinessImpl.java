@@ -28,7 +28,7 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 				.withMatcher("name", ExampleMatcher.GenericPropertyMatcher.of(ExampleMatcher.StringMatcher.CONTAINING, true));
 		Example<Product> example = Example.of(product, matcher);
 		DBObject jsonNode = new BasicDBObject();
-		List list = productRepository.findAll(example);
+		List<Product> list = productRepository.findAll(example);
 		jsonNode.put("count", list.size());
 		jsonNode.put("products", list);
 		return jsonNode;
@@ -65,7 +65,7 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 	@Override
 	public DBObject getAll() {
 		DBObject jsonNode = new BasicDBObject();
-		List products = productRepository.findAll();
+		List<Product> products = productRepository.findAll();
 		jsonNode.put("count", products.size());
 		jsonNode.put("products", products);
 		return jsonNode;
