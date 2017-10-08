@@ -23,8 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/get").authenticated()
                 .antMatchers(HttpMethod.POST, "/product/save").authenticated()
                 .antMatchers(HttpMethod.GET, "/product/like/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/product/like/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/product/like/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/comment/save/**").authenticated()
         ;
     }
 }

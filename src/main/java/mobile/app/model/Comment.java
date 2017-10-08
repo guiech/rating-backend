@@ -3,6 +3,8 @@ package mobile.app.model;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -12,37 +14,18 @@ public class Comment {
 
 	@Id
 	private String id;
-
-	private String userId;
-
-	private String productId;
-
+	@DBRef
+	@Indexed
+	private User createBy;
+	@DBRef
+	@Indexed
+	private Product product;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private Date commentsDate;
-
-	private String commentText;
-
+	private Date date;
+	private String text;
 	private Integer stars;
-
-	private Integer likes;
-
-	public Integer getLikes() {
-		return likes;
-	}
-
-	public void setLikes(Integer likes) {
-		this.likes = likes;
-	}
-
-	public Integer getDisLikes() {
-		return disLikes;
-	}
-
-	public void setDisLikes(Integer disLikes) {
-		this.disLikes = disLikes;
-	}
-
-	private Integer disLikes;
+	private Integer likesCount;
+	private Integer dislikesCount;
 
 	public String getId() {
 		return id;
@@ -52,36 +35,36 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Date getCommentsDate() {
-		return commentsDate;
+	public User getCreateBy() {
+		return createBy;
 	}
 
-	public String getProductId() {
-		return productId;
+	public void setCreateBy(User createBy) {
+		this.createBy = createBy;
 	}
 
-	public String getUserId() {
-		return userId;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setCommentsDate(Date commentsDate) {
-		this.commentsDate = commentsDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public String getCommentText() {
-		return commentText;
+	public String getText() {
+		return text;
 	}
 
-	public void setCommentText(String commentText) {
-		this.commentText = commentText;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public Integer getStars() {
@@ -90,6 +73,22 @@ public class Comment {
 
 	public void setStars(Integer stars) {
 		this.stars = stars;
+	}
+
+	public Integer getLikesCount() {
+		return likesCount;
+	}
+
+	public void setLikesCount(Integer likesCount) {
+		this.likesCount = likesCount;
+	}
+
+	public Integer getDislikesCount() {
+		return dislikesCount;
+	}
+
+	public void setDislikesCount(Integer dislikesCount) {
+		this.dislikesCount = dislikesCount;
 	}
 
 }
