@@ -23,7 +23,7 @@ public class Product {
 	private Integer commentsCount;
 	private Integer likesCount;
 	private Integer dislikesCount;
-	private Float rate;
+	private Double rate;
 	@DBRef
 	@Indexed
 	private User createBy;
@@ -115,11 +115,11 @@ public class Product {
 		this.dislikesCount--;
 	}
 
-	public Float getRate() {
+	public Double getRate() {
 		return rate;
 	}
 
-	public void setRate(Float rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
 	}
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mobile.app.business.UserBusiness;
-import mobile.app.exceptions.UserAlreadyRegistredException;
+import mobile.app.exceptions.UserAlreadyRegisteredException;
 import mobile.app.model.Product;
 import mobile.app.model.User;
 
@@ -37,14 +37,14 @@ public class UserBusinessImpl extends GenericBusiness implements UserBusiness {
 
 	@Override
 	public User register(User user) {
-		checkDuplicatedUser(user.getEmail());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		checkDuplicatedUser(user.getEmail(),user.getUsername());
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 	
-	private void checkDuplicatedUser(String email){
-		if(userRepository.getByEmail(email)!=null){
-			throw new UserAlreadyRegistredException();
+	private void checkDuplicatedUser(String... userData){
+		if(userRepository.getByEmail(userData[0])!=null || userRepository.getByUsername(userData[1])!=null){
+			throw new UserAlreadyRegisteredException();
 		}
 	}
 }

@@ -2,6 +2,7 @@ package mobile.app.business.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.OptionalDouble;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -32,14 +33,11 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 			comment.setDate(new Date());
 			comment.setLikesCount(0);
 			comment.setDislikesCount(0);
-			// TODO improve this shit, should get rate avg with mongo query
-			float total = comment.getStars();
-			for(Comment c : commentRepository.findByProductId(productId)) {
-				total += c.getStars();
-			}
-			product.setRate(total / (float)product.getCommentsCount());
-			productRepository.save(product);
 			commentRepository.save(comment);
+			// TODO improve this shit, should get rate avg with mongo query
+			OptionalDouble average = commentRepository.findByProductId(productId).stream().mapToDouble(Comment::getStars).average();
+			product.setRate(average.getAsDouble());
+			productRepository.save(product);
 			result.put("success", true);
 			result.put("comment", comment);
 		} else {

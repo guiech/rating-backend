@@ -13,7 +13,7 @@ import com.mongodb.DBObject;
 
 import mobile.app.config.BaseContext;
 import mobile.app.controller.UserRestService;
-import mobile.app.exceptions.UserAlreadyRegistredException;
+import mobile.app.exceptions.UserAlreadyRegisteredException;
 import mobile.app.model.User;
 
 @RestController
@@ -29,12 +29,11 @@ public class UserRestServiceImpl extends BaseContext implements UserRestService{
 	}
 	
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(UserAlreadyRegistredException.class)
-	private DBObject UserAlreadyRegistredExceptionHandler(UserAlreadyRegistredException e) {
+	@ExceptionHandler(UserAlreadyRegisteredException.class)
+	private DBObject UserAlreadyRegistredExceptionHandler(UserAlreadyRegisteredException e) {
 		LOG.error(e.getMessage(),e);
 		DBObject dbObject = new BasicDBObject();
 		dbObject.put("status", 400);
 		return dbObject;
 	}
-
 }

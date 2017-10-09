@@ -58,7 +58,7 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 		product.setCommentsCount(0);
 		product.setLikesCount(0);
 		product.setDislikesCount(0);
-		product.setRate(0f);
+		product.setRate(0D);
 		return productRepository.save(product);
 	}
 	

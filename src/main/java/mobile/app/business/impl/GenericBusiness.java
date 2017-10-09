@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.util.CollectionUtils;
 
 import com.mongodb.BasicDBObject;
@@ -36,6 +37,9 @@ public class GenericBusiness {
 	
 	@Autowired
 	protected CommentRepository commentRepository;
+	
+	@Autowired 
+	protected MongoTemplate mongoTemplate;
 	
 	
 	//TODO Try to DRY the code.
@@ -80,7 +84,7 @@ public class GenericBusiness {
 		dbObject.put("users", Arrays.asList("gaiquel@gmail.com"));
 		product.setLikesCount(1);
 		product.setName("product name");
-		product.setRate(new Float(5.5));
+		product.setRate(new Double(5.5));
 		return productRepository.save(product);
 	}
 	
