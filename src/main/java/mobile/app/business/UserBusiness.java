@@ -11,7 +11,7 @@ public interface UserBusiness {
 	
 	public void deleteSearchedProduct(String userId,String productId);
 	
-	public void saveSearchedProduct(String userId,String productId);
+	public void saveSearchedProduct(String userName,String productId, String productName);
 	
 	public User register(User user);
 	
