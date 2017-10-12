@@ -5,14 +5,11 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.OptionalDouble;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import mobile.app.model.Product;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -25,9 +22,6 @@ import mobile.app.model.Comment;
 @Service
 @Transactional
 public class CommentBusinessImpl extends GenericBusiness implements CommentBusiness{
-
-	@Autowired
-	MongoTemplate mongoTemplate;
 
 	@Override
 	public List<Comment> getProductComments(String productId) {
