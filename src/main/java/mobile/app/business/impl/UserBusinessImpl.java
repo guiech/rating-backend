@@ -1,7 +1,7 @@
 package mobile.app.business.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +11,6 @@ import com.mongodb.DBObject;
 
 import mobile.app.business.UserBusiness;
 import mobile.app.exceptions.UserAlreadyRegisteredException;
-import mobile.app.model.Product;
 import mobile.app.model.User;
 
 @Service
@@ -19,14 +18,17 @@ import mobile.app.model.User;
 public class UserBusinessImpl extends GenericBusiness implements UserBusiness {
 
 	@Override
-	public List<Product> getLastSearchedProducts(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DBObject> getLastSearchedProducts(String username) {
+		return userRepository.getByUsername(username).getSearchedProducts();
 	}
 
 	@Override
-	public void deleteSearchedProduct(String userId, String productId) {
-		// TODO Auto-generated method stub
+	public void deleteSearchedProduct(String username, String productId) {
+		User user = userRepository.getByUsername(username);
+		List<DBObject> products = user.getSearchedProducts();
+        Predicate<DBObject> productPredicate = p-> p.get("productId").equals(productId);
+		products.removeIf(productPredicate);
+		userRepository.save(user);
 	}
 
 	@Override

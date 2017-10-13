@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,15 +33,17 @@ public class UserRestServiceImpl extends BaseContext implements UserRestService 
 	}
 
 	@Override
-	public List<Product> getLastSearchedProducts() {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(value = "/search-product", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<DBObject> getLastSearchedProducts() {
+		return userBusiness.getLastSearchedProducts(this.getAuthInformation().getName());
 	}
 
 	@Override
-	public void deleteSearchedProduct(String userName, String productId) {
-		// TODO Auto-generated method stub
-
+	@RequestMapping(value = "/delete-product/{productId}", method = RequestMethod.DELETE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void deleteSearchedProduct(@PathVariable String productId) {
+		userBusiness.deleteSearchedProduct(this.getAuthInformation().getName(), productId);
 	}
 
 	@Override
