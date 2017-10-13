@@ -34,9 +34,7 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 			comment.setDislikesCount(0);
 			commentRepository.save(comment);
 			product.increaseCommentsCount();
-
-
-			commentRepository.getStarsAverageByProductId(productId);
+			commentRepository.getStarsAverageByProductId(productId,this.mongoTemplate);
 			product.setRate(2d);
 			productRepository.save(product);
 			result.put("success", true);
