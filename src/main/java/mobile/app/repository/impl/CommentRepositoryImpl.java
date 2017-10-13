@@ -24,14 +24,13 @@ public abstract class CommentRepositoryImpl extends BaseContext implements Comme
 
 
     @Override
-    public Comment getStarsAverageByProductId(String productId) {
-//        return 2D;
+    public double getStarsAverageByProductId(String productId) {
         Aggregation agg = newAggregation(
                 match(Criteria.where("product.$id").is(new ObjectId(productId))),
                 group().avg("stars").as("average")
         );
         AggregationResults<AverageResult> res = mongoTemplate.aggregate(agg, Comment.class, AverageResult.class);
         System.out.println("---->"+res.getUniqueMappedResult().getAverage().doubleValue());
-        return new Comment();
+        return res.getUniqueMappedResult().getAverage().doubleValue();
     }
 }
