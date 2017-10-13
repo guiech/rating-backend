@@ -10,4 +10,6 @@ import mobile.app.model.Comment;
 @Transactional
 public interface CommentRepository extends MongoRepository<Comment, String> {
 	 List<Comment> findByProductId(String productId);
+
+	Comment getStarsAverageByProductId(String productId);
 }
