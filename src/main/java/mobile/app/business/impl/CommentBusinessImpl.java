@@ -26,7 +26,6 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		DBObject result = new BasicDBObject();
 		Product product = productRepository.findById(productId);
 		if(product != null) {
-			product.increaseCommentsCount();
 			comment.setProduct(product);
 			comment.setCreateBy(userRepository.getByUsername(username));
 			comment.setDate(new Date());
@@ -34,8 +33,7 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 			comment.setDislikesCount(0);
 			commentRepository.save(comment);
 			product.increaseCommentsCount();
-			commentRepository.getStarsAverageByProductId(productId,this.mongoTemplate);
-			product.setRate(2d);
+			product.setRate(commentRepository.getStarsAverageByProductId(productId,this.mongoTemplate));
 			productRepository.save(product);
 			result.put("success", true);
 			result.put("comment", comment);

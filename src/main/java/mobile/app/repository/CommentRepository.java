@@ -21,13 +21,12 @@ import mobile.app.repository.common.AverageResult;
 public interface CommentRepository extends MongoRepository<Comment, String> {
 	List<Comment> findByProductId(String productId);
 
-	public default double getStarsAverageByProductId(String productId, MongoTemplate mongoTemplate) {
+	default double getStarsAverageByProductId(String productId, MongoTemplate mongoTemplate) {
         Aggregation agg = newAggregation(
                 match(Criteria.where("product.$id").is(new ObjectId(productId))),
                 group().avg("stars").as("average")
         );
         AggregationResults<AverageResult> res = mongoTemplate.aggregate(agg, Comment.class, AverageResult.class);
-        System.out.println("---->"+res.getUniqueMappedResult().getAverage().doubleValue());
         return res.getUniqueMappedResult().getAverage().doubleValue();
     }
 }
