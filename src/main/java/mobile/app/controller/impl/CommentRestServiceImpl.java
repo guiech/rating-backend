@@ -29,7 +29,7 @@ public class CommentRestServiceImpl extends BaseContext implements CommentRestSe
 	@Override
 	@RequestMapping(value ="/{productId}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<Comment> getProductComments(@PathVariable String productId) {
+	public DBObject getProductComments(@PathVariable String productId) {
 		return commentBusiness.getProductComments(productId);
 	}
 }

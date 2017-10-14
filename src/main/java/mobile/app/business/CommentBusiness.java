@@ -7,7 +7,7 @@ import mobile.app.model.Comment;
 
 public interface CommentBusiness {
 
-	public List<Comment> getProductComments(String productId);
+	public DBObject getProductComments(String productId);
 	
 	public DBObject saveComment(Comment comment, String productId, String username);
 	

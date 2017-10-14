@@ -17,8 +17,11 @@ import mobile.app.model.Comment;
 public class CommentBusinessImpl extends GenericBusiness implements CommentBusiness{
 
 	@Override
-	public List<Comment> getProductComments(String productId) {
-		return commentRepository.findByProductId(productId);
+	public DBObject getProductComments(String productId) {
+		DBObject result = new BasicDBObject();
+		result.put("success", true);
+		result.put("comments", commentRepository.findByProductId(productId));
+		return result;
 	}
 
 	@Override
