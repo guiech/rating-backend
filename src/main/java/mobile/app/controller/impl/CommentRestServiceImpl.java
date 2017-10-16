@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,7 @@ public class CommentRestServiceImpl extends BaseContext implements CommentRestSe
 	@Override
 	@RequestMapping(value ="/{productId}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public DBObject getProductComments(@PathVariable String productId) {
-		return commentBusiness.getProductComments(productId);
+	public DBObject getProductComments(@PathVariable String productId, @RequestParam(required = false) Integer page) {
+		return commentBusiness.getProductComments(productId, page);
 	}
 }

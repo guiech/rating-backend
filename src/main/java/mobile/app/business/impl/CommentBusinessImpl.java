@@ -1,11 +1,12 @@
 package mobile.app.business.impl;
 
 import java.util.Date;
-import java.util.List;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import mobile.app.model.Product;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,14 @@ import mobile.app.model.Comment;
 @Transactional
 public class CommentBusinessImpl extends GenericBusiness implements CommentBusiness{
 
+	public static final int pageSize = 4;
+
 	@Override
-	public DBObject getProductComments(String productId) {
+	public DBObject getProductComments(String productId, Integer page) {
 		DBObject result = new BasicDBObject();
 		result.put("success", true);
-		result.put("comments", commentRepository.findByProductId(productId));
+		PageRequest request = new PageRequest(page == null ? 0 : page.intValue(), pageSize, new Sort(Sort.Direction.DESC, "date"));
+		result.put("comments", commentRepository.findByProductIdPageable(productId, request));
 		return result;
 	}
 
@@ -46,5 +50,5 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		}
 		return result;
 	}
-	
+
 }

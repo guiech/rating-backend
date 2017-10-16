@@ -12,6 +12,6 @@ public interface CommentRestService {
 	
 	public DBObject saveComment(@PathVariable String productId, @RequestBody Comment comment);
 	
-    public DBObject getProductComments(@PathVariable String productId);
+    public DBObject getProductComments(@PathVariable String productId, @PathVariable Integer page);
 
 }
