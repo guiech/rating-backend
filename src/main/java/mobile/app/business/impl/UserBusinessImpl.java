@@ -51,6 +51,18 @@ public class UserBusinessImpl extends GenericBusiness implements UserBusiness {
 		return userRepository.save(user);
 	}
 
+	@Override
+	public DBObject getUserData(String username) {
+		User user = userRepository.getByUsername(username);
+		DBObject json = new BasicDBObject();
+		json.put("id", user.getId());
+		json.put("name", user.getName());
+		json.put("username", user.getUsername());
+		json.put("email", user.getEmail());
+		json.put("roles", user.getRoles());
+		return json;
+	}
+
 	private void checkDuplicatedUser(String... userData) {
 		if (userRepository.getByEmail(userData[0]) != null || userRepository.getByUsername(userData[1]) != null) {
 			throw new UserAlreadyRegisteredException();

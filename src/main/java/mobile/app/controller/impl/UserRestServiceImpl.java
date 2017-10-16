@@ -53,6 +53,13 @@ public class UserRestServiceImpl extends BaseContext implements UserRestService 
 		userBusiness.saveSearchedProduct(this.getAuthInformation().getName(), product.getId(), product.getName());
 	}
 
+	@Override
+	@RequestMapping(value = "/me", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject userData() {
+		return userBusiness.getUserData(this.getAuthInformation().getName());
+	}
+
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(UserAlreadyRegisteredException.class)
 	private DBObject UserAlreadyRegistredExceptionHandler(UserAlreadyRegisteredException e) {

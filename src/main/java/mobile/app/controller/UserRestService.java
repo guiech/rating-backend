@@ -19,5 +19,7 @@ public interface UserRestService {
 	public void deleteSearchedProduct(@PathVariable String productId);
 	
 	public void saveSearchedProduct(@RequestBody Product product);
+
+	public DBObject userData();
 	
 }

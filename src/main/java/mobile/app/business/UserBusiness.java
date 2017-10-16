@@ -15,5 +15,7 @@ public interface UserBusiness {
 	public void saveSearchedProduct(String userName,String productId, String productName);
 	
 	public User register(User user);
+
+	public DBObject getUserData(String username);
 	
 }
