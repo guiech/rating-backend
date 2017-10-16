@@ -83,12 +83,28 @@ public class Comment {
 		this.likesCount = likesCount;
 	}
 
+	public void increaseLikeCount() {
+		this.likesCount++;
+	}
+
+	public void decreaseLikeCount() {
+		this.likesCount--;
+	}
+
 	public Integer getDislikesCount() {
 		return dislikesCount;
 	}
 
 	public void setDislikesCount(Integer dislikesCount) {
 		this.dislikesCount = dislikesCount;
+	}
+
+	public void increaseDislikeCount() {
+		this.dislikesCount++;
+	}
+
+	public void decreaseDislikeCount() {
+		this.dislikesCount--;
 	}
 
 }

@@ -1,7 +1,5 @@
 package mobile.app.controller.impl;
 
-import java.util.List;
-
 import com.mongodb.DBObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +29,27 @@ public class CommentRestServiceImpl extends BaseContext implements CommentRestSe
 	@RequestMapping(value ="/{productId}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public DBObject getProductComments(@PathVariable String productId, @RequestParam(required = false) Integer page) {
-		return commentBusiness.getProductComments(productId, page);
+		return commentBusiness.getProductComments(productId, page, getAuthInformation().getName());
+	}
+
+	@Override
+	@RequestMapping(value ="/like/{commentId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject like(@PathVariable String commentId) {
+		return commentBusiness.like(commentId, getAuthInformation().getName(), 1);
+	}
+
+	@Override
+	@RequestMapping(value ="/dislike/{commentId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject unlike(@PathVariable String commentId) {
+		return commentBusiness.like(commentId, getAuthInformation().getName(), -1);
+	}
+
+	@Override
+	@RequestMapping(value ="/unlike/{commentId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject removeLike(@PathVariable String commentId) {
+		return commentBusiness.like(commentId, getAuthInformation().getName(), 0);
 	}
 }

@@ -77,8 +77,12 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 		result.put("success", true);
 		try {
 			User user = userRepository.getByUsername(username);
-			Product product = new Product();
-			product.setId(productId);
+			Product product = productRepository.findById(productId);
+			if(product == null) {
+				result.put("success", false);
+				result.put("message", "Product does not exist");
+				return result;
+			}
 
 			ProductLikes productLikes = productLikeRepository.findByUserIdAndProductId(user.getId(), productId);
 			if (productLikes == null) {
@@ -90,7 +94,6 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 					productLikes.setProduct(product);
 					productLikes.setUser(user);
 					productLikeRepository.save(productLikes);
-					product = productRepository.findById(productId);
 					switch (status) {
 						case 1:
 							product.increaseLikeCount();
@@ -104,7 +107,6 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 			} else if (productLikes.getLikeStatus() != status) {
 				// avoid updating DB if status is the same one
 				// change like status
-				product = productRepository.findById(productId);
 				switch (productLikes.getLikeStatus()) {
 					case 1:
 						product.decreaseLikeCount();

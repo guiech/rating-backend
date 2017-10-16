@@ -20,9 +20,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/browser/**").permitAll()
                 .antMatchers("/users/**").denyAll()
-                .antMatchers(HttpMethod.GET,"/get").authenticated()
+                .antMatchers(HttpMethod.GET, "/get").authenticated()
                 .antMatchers(HttpMethod.POST, "/product/save").authenticated()
                 .antMatchers(HttpMethod.GET, "/product/like/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/product/dislike/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/product/unlike/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/comment/like/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/comment/dislike/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/comment/unlike/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/comment/save/**").authenticated()
         ;
     }

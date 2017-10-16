@@ -3,6 +3,8 @@ package mobile.app.model;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -13,14 +15,20 @@ public class CommentLikes {
 	@Id
 	private String id;
 
-	private String commentId;
+	@DBRef
+	@Indexed
+	private Comment comment;
 
-	private String productId;
+	@DBRef
+	@Indexed
+	private User user;
 
-	private Integer likeStatus;
+	private int likeStatus;
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date createAt;
+
+	// ***** Getters and setters *****
 
 	public String getId() {
 		return id;
@@ -30,27 +38,27 @@ public class CommentLikes {
 		this.id = id;
 	}
 
-	public String getCommentId() {
-		return commentId;
+	public Comment getComment() {
+		return comment;
 	}
 
-	public void setCommentId(String commentId) {
-		this.commentId = commentId;
+	public void setComment(Comment comment) {
+		this.comment = comment;
 	}
 
-	public String getProductId() {
-		return productId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Integer getLikeStatus() {
+	public int getLikeStatus() {
 		return likeStatus;
 	}
 
-	public void setLikeStatus(Integer likeStatus) {
+	public void setLikeStatus(int likeStatus) {
 		this.likeStatus = likeStatus;
 	}
 

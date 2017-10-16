@@ -22,6 +22,8 @@ import mobile.app.repository.common.AverageResult;
 @Transactional
 public interface CommentRepository extends MongoRepository<Comment, String> {
 
+    Comment findById(String id);
+
     @Query("{ product.id : { $eq : ?0}}")
     Page<Comment> findByProductIdPageable(@Param("productId") String productId, Pageable pageable);
 

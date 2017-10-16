@@ -14,4 +14,10 @@ public interface CommentRestService {
 	
     public DBObject getProductComments(@PathVariable String productId, @PathVariable Integer page);
 
+    public DBObject like(@PathVariable String commentId);
+
+    public DBObject unlike(@PathVariable String commentId);
+
+    public DBObject removeLike(@PathVariable String commentId);
+
 }
