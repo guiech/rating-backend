@@ -35,7 +35,7 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		comments.forEach(comment -> {
 			DBObject dbComment = new BasicDBObject();
 			dbComment.put("id", comment.getId());
-			dbComment.put("date", comment.getText());
+			dbComment.put("text", comment.getText());
 			dbComment.put("stars", comment.getStars());
 			dbComment.put("likesCount", comment.getLikesCount());
 			dbComment.put("dislikesCount", comment.getDislikesCount());
