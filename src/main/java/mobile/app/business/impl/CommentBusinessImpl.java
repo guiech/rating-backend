@@ -53,13 +53,10 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 			commentList.add(dbComment);
 		});
 
-
-
 		DBObject dbComments = new BasicDBObject();
 		dbComments.put("content", commentList);
 		dbComments.put("last", comments.isLast());
 		result.put("comments", dbComments);
-
 
 		return result;
 	}

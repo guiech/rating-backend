@@ -3,10 +3,10 @@ package mobile.app.business.impl;
 import java.util.Date;
 import java.util.List;
 
-import mobile.app.model.ProductLikes;
-import mobile.app.model.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +15,8 @@ import com.mongodb.DBObject;
 
 import mobile.app.business.ProductBusiness;
 import mobile.app.model.Product;
+import mobile.app.model.ProductLikes;
+import mobile.app.model.User;
 
 @Service
 @Transactional
@@ -134,5 +136,18 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 		}
 
 		return result;
+	}
+
+	@Override
+	public DBObject getProductsByNameForResultPage(Integer page, String username, String brand) {
+		DBObject result = new BasicDBObject();
+		Product product = new Product();
+		product.setBrand(brand);
+		PageRequest request = new PageRequest(page == null ? 0 : page.intValue(), pageSize, new Sort(Sort.Direction.DESC, "rate"));
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("brand", ExampleMatcher.GenericPropertyMatcher.of(ExampleMatcher.StringMatcher.CONTAINING, true));
+        Example<Product> example = Example.of(product, matcher);
+        result.put("products", productRepository.findAll(example, request));
+        return result;
 	}
 }

@@ -1,7 +1,5 @@
 package mobile.app.business;
 
-import java.util.List;
-
 import com.mongodb.DBObject;
 
 import mobile.app.model.Product;
@@ -9,6 +7,8 @@ import mobile.app.model.Product;
 public interface ProductBusiness{
 	
 	public DBObject getProductsByName(String name);
+	
+	public DBObject getProductsByNameForResultPage(Integer page, String username, String brand);
 	
 	public DBObject getProductDetailsById(String productId, String username);
 	
