@@ -23,7 +23,7 @@ import mobile.app.repository.UserRepository;
 
 public class GenericBusiness {
 	
-	public static final int pageSize = 4;
+	public static final int pageSize = 5;
 	
 	@Autowired
 	protected ProductRepository productRepository;

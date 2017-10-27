@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -147,7 +148,9 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("brand", ExampleMatcher.GenericPropertyMatcher.of(ExampleMatcher.StringMatcher.CONTAINING, true));
         Example<Product> example = Example.of(product, matcher);
-        result.put("products", productRepository.findAll(example, request));
+        Page<Product> products = productRepository.findAll(example, request);
+        result.put("products", products);
+        result.put("isLast", products.isLast());
         return result;
 	}
 }
