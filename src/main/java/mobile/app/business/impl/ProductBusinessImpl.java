@@ -1,23 +1,24 @@
 package mobile.app.business.impl;
 
-import java.util.Date;
-import java.util.List;
-
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import mobile.app.business.ProductBusiness;
+import mobile.app.model.Product;
+import mobile.app.model.ProductLikes;
+import mobile.app.model.User;
+import mobile.app.model.UserPublic;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-
-import mobile.app.business.ProductBusiness;
-import mobile.app.model.Product;
-import mobile.app.model.ProductLikes;
-import mobile.app.model.User;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,7 +36,6 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 		jsonNode.put("count", list.size());
 		jsonNode.put("products", list);
 		return jsonNode;
-//		return productRepository.findByNameRegex(".*"+name+".*");
 	}
 
 	@Override
@@ -52,11 +52,43 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 	}
 
 	@Override
+	public DBObject getProductByTags(String searchedText, Integer page) {
+		DBObject jsonNode = new BasicDBObject();
+		jsonNode.put("success", false);
+
+		try {
+			String[] tags = searchedText.split(" ");
+			Criteria[] tagsCriteria = new Criteria[tags.length];
+			for (int i = 0; i < tags.length; i++) {
+				tagsCriteria[i] = Criteria.where("tags").regex(tags[i].toLowerCase());
+			}
+			Criteria criteria = new Criteria();
+			criteria.andOperator(tagsCriteria);
+			Query query = new Query(criteria);
+			query.limit(pageSize);
+			query.with(new PageRequest(page == null ? 0 : page.intValue(), pageSize, new Sort(Sort.Direction.DESC, "rate")));
+			long start = System.currentTimeMillis();
+			List<Product> productList = mongoTemplate.find(query, Product.class);
+			System.out.println("getProductByTags: " + (System.currentTimeMillis() - start) + " millis");
+			jsonNode.put("products", productList);
+			if (productList.size() < pageSize) {
+				jsonNode.put("isLast", true);
+			} else {
+				jsonNode.put("isLast", false);
+			}
+			jsonNode.put("success", true);
+		} catch (Exception e) {
+			jsonNode.put("message", e.getMessage());
+		}
+		return jsonNode;
+	}
+
+	@Override
 	public Product saveProduct(Product product, String username) {
 		if (product.getDescription()==null) {
 			product =  mockProduct();
 		}
-		product.setCreateBy(userRepository.getByUsername(username));
+		product.setCreateBy(UserPublic.parseUser(userRepository.getByUsername(username)));
 		product.setCreateAt(new Date());
 		product.setCommentsCount(0);
 		product.setLikesCount(0);

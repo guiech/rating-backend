@@ -11,6 +11,8 @@ public interface ProductBusiness{
 	public DBObject getProductsByNameForResultPage(Integer page, String username, String brand);
 	
 	public DBObject getProductDetailsById(String productId, String username);
+
+	public DBObject getProductByTags(String searchedText, Integer page);
 	
 	public Product saveProduct(Product product, String username);
 	

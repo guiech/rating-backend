@@ -1,14 +1,14 @@
 package mobile.app.model;
 
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import java.util.Date;
+import java.util.List;
 
 @Document(collection = "product")
 public class Product {
@@ -26,10 +26,11 @@ public class Product {
 	private Double rate;
 	@DBRef
 	@Indexed
-	private User createBy;
+	private UserPublic createBy;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date createAt;
 	private List<String> images;
+	private List<String> tags;
 
 	public String getId() {
 		return id;
@@ -123,11 +124,11 @@ public class Product {
 		this.rate = rate;
 	}
 
-	public User getCreateBy() {
+	public UserPublic getCreateBy() {
 		return createBy;
 	}
 
-	public void setCreateBy(User createBy) {
+	public void setCreateBy(UserPublic createBy) {
 		this.createBy = createBy;
 	}
 
@@ -147,7 +148,15 @@ public class Product {
 		this.images = images;
 	}
 
-	public Product() {
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public Product() {
 	}
 
 	public String toString() {

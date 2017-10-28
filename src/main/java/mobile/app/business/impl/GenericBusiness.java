@@ -1,25 +1,24 @@
 package mobile.app.business.impl;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.util.CollectionUtils;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
 import mobile.app.model.Comment;
 import mobile.app.model.Product;
 import mobile.app.model.ProductLikes;
 import mobile.app.model.User;
+import mobile.app.model.UserPublic;
 import mobile.app.repository.CommentLikesRepository;
 import mobile.app.repository.CommentRepository;
 import mobile.app.repository.ProductLikesRepository;
 import mobile.app.repository.ProductRepository;
 import mobile.app.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class GenericBusiness {
 	
@@ -75,7 +74,7 @@ public class GenericBusiness {
 		product.setBrand("brand");
 		product.setCommentsCount(2);
 		product.setCreateAt(new Date());
-		product.setCreateBy(getUser());
+		product.setCreateBy(UserPublic.parseUser(getUser()));
 		product.setDescription("Description");
 		DBObject dbObject = new BasicDBObject();
 		dbObject.put("users", Arrays.asList("gaiquel@gmail.com"));

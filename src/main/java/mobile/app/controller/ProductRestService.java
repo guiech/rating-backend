@@ -23,6 +23,8 @@ public interface ProductRestService {
 	public DBObject getAllProducts();
 	
 	public DBObject getProductsByName(@PathVariable String name);
+
+	public DBObject getProductsByTags(@PathVariable String searchedText, @PathVariable Integer page);
 	
 	public DBObject getProductsByNameForResultPage(@RequestParam(required = false) Integer page, @PathVariable String brand);
 

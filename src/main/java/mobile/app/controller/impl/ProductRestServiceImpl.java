@@ -70,6 +70,13 @@ public class ProductRestServiceImpl extends BaseContext implements ProductRestSe
 	}
 
 	@Override
+	@RequestMapping(value = "/byTags/{searchedText}", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject getProductsByTags(@PathVariable String searchedText, @RequestParam(required = false) Integer page) {
+		return productBusiness.getProductByTags(searchedText, page);
+	}
+
+	@Override
 	@RequestMapping(value = "/result-page/{brand}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public DBObject getProductsByNameForResultPage(@RequestParam(required = false) Integer page, @PathVariable String brand) {
