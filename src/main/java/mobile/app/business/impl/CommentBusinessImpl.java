@@ -8,7 +8,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import mobile.app.model.CommentLikes;
 import mobile.app.model.Product;
+import mobile.app.model.ProductMin;
 import mobile.app.model.User;
+import mobile.app.model.UserMin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -31,30 +33,19 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		PageRequest request = new PageRequest(page == null ? 0 : page.intValue(), pageSize, new Sort(Sort.Direction.DESC, "date"));
 
 		Page<Comment> comments = commentRepository.findByProductIdPageable(productId, request);
-		List<DBObject> commentList = new ArrayList<>(comments.getNumberOfElements());
-		comments.forEach(comment -> {
-			DBObject dbComment = new BasicDBObject();
-			dbComment.put("id", comment.getId());
-			dbComment.put("text", comment.getText());
-			dbComment.put("stars", comment.getStars());
-			dbComment.put("likesCount", comment.getLikesCount());
-			dbComment.put("dislikesCount", comment.getDislikesCount());
-			dbComment.put("date", comment.getDate());
-			DBObject dbUser = new BasicDBObject();
-			dbUser.put("name", comment.getCreateBy().getName());
-			dbUser.put("username", comment.getCreateBy().getUsername());
-			dbComment.put("createBy", dbUser);
-			// TODO find a better way to know if user is auth or not
+		List<Integer> likesList = new ArrayList<>(comments.getNumberOfElements());
+        // TODO find a better way to know if user is auth or not
+        final String userId = !username.equals("anonymousUser") ? userRepository.getByUsername(username).getId() : null;
+        comments.forEach(comment -> {
 			CommentLikes commentLikes = null;
-			if (!username.equals("anonymousUser")) {
-				commentLikes = commentLikeRepository.findByUserIdAndCommentId(comment.getCreateBy().getId(), comment.getId());
+			if (userId != null) {
+				commentLikes = commentLikeRepository.findByUserIdAndCommentId(userId, comment.getId());
 			}
-			dbComment.put("userLike", commentLikes != null ? commentLikes.getLikeStatus() : 0);
-			commentList.add(dbComment);
+			likesList.add(commentLikes != null ? commentLikes.getLikeStatus() : 0);
 		});
-
 		DBObject dbComments = new BasicDBObject();
-		dbComments.put("content", commentList);
+		dbComments.put("content", comments.getContent());
+		dbComments.put("likes", likesList);
 		dbComments.put("last", comments.isLast());
 		result.put("comments", dbComments);
 
@@ -66,8 +57,8 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		DBObject result = new BasicDBObject();
 		Product product = productRepository.findById(productId);
 		if(product != null) {
-			comment.setProduct(product);
-			comment.setCreateBy(userRepository.getByUsername(username));
+			comment.setProduct(ProductMin.parseProduct(product));
+			comment.setCreateBy(UserMin.parseUser(userRepository.getByUsername(username)));
 			comment.setDate(new Date());
 			comment.setLikesCount(0);
 			comment.setDislikesCount(0);
@@ -105,7 +96,7 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 					commentLike.setLikeStatus(status);
 					commentLike.setCreateAt(new Date());
 					commentLike.setComment(comment);
-					commentLike.setUser(user);
+					commentLike.setUser(UserMin.parseUser(user));
 					commentLikeRepository.save(commentLike);
 					switch (status) {
 						case 1:

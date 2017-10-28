@@ -26,7 +26,7 @@ public class Product {
 	private Double rate;
 	@DBRef
 	@Indexed
-	private UserPublic createBy;
+	private UserMin createBy;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date createAt;
 	private List<String> images;
@@ -124,11 +124,11 @@ public class Product {
 		this.rate = rate;
 	}
 
-	public UserPublic getCreateBy() {
+	public UserMin getCreateBy() {
 		return createBy;
 	}
 
-	public void setCreateBy(UserPublic createBy) {
+	public void setCreateBy(UserMin createBy) {
 		this.createBy = createBy;
 	}
 

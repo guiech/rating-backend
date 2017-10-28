@@ -5,8 +5,9 @@ import com.mongodb.DBObject;
 import mobile.app.model.Comment;
 import mobile.app.model.Product;
 import mobile.app.model.ProductLikes;
+import mobile.app.model.ProductMin;
 import mobile.app.model.User;
-import mobile.app.model.UserPublic;
+import mobile.app.model.UserMin;
 import mobile.app.repository.CommentLikesRepository;
 import mobile.app.repository.CommentRepository;
 import mobile.app.repository.ProductLikesRepository;
@@ -62,8 +63,8 @@ public class GenericBusiness {
 	protected Comment mockComment() {
 		Comment comment = new Comment();
 		comment.setStars(4);
-		comment.setCreateBy(getUser());
-		comment.setProduct(getProduct());
+		comment.setCreateBy(UserMin.parseUser(getUser()));
+		comment.setProduct(ProductMin.parseProduct(getProduct()));
 		comment.setLikesCount(0);
 		comment.setDislikesCount(0);
 		return commentRepository.save(comment);
@@ -74,7 +75,7 @@ public class GenericBusiness {
 		product.setBrand("brand");
 		product.setCommentsCount(2);
 		product.setCreateAt(new Date());
-		product.setCreateBy(UserPublic.parseUser(getUser()));
+		product.setCreateBy(UserMin.parseUser(getUser()));
 		product.setDescription("Description");
 		DBObject dbObject = new BasicDBObject();
 		dbObject.put("users", Arrays.asList("gaiquel@gmail.com"));
@@ -92,8 +93,8 @@ public class GenericBusiness {
 	protected ProductLikes mockProductLike() {
 		ProductLikes likes = new ProductLikes();
 		likes.setCreateAt(new Date());
-		likes.setUser(getUser());
-		likes.setProduct(getProduct());
+		likes.setUser(UserMin.parseUser(getUser()));
+		likes.setProduct(ProductMin.parseProduct(getProduct()));
 		likes.setLikeStatus(1);
 		return productLikeRepository.save(likes);
 	}

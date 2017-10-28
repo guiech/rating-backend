@@ -16,10 +16,10 @@ public class Comment {
 	private String id;
 	@DBRef
 	@Indexed
-	private User createBy;
+	private UserMin createBy;
 	@DBRef
 	@Indexed
-	private Product product;
+	private ProductMin product;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date date;
 	private String text;
@@ -35,19 +35,19 @@ public class Comment {
 		this.id = id;
 	}
 
-	public User getCreateBy() {
+	public UserMin getCreateBy() {
 		return createBy;
 	}
 
-	public void setCreateBy(User createBy) {
+	public void setCreateBy(UserMin createBy) {
 		this.createBy = createBy;
 	}
 
-	public Product getProduct() {
+	public ProductMin getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductMin product) {
 		this.product = product;
 	}
 

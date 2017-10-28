@@ -17,11 +17,11 @@ public class ProductLikes {
 
 	@DBRef
 	@Indexed
-	private Product product;
+	private ProductMin product;
 
 	@DBRef
 	@Indexed
-	private User user;
+	private UserMin user;
 	
 	private int likeStatus;
 	
@@ -36,19 +36,19 @@ public class ProductLikes {
 		this.id = id;
 	}
 
-	public Product getProduct() {
+	public ProductMin getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductMin product) {
 		this.product = product;
 	}
 
-	public User getUser() {
+	public UserMin getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserMin user) {
 		this.user = user;
 	}
 

@@ -5,8 +5,9 @@ import com.mongodb.DBObject;
 import mobile.app.business.ProductBusiness;
 import mobile.app.model.Product;
 import mobile.app.model.ProductLikes;
+import mobile.app.model.ProductMin;
 import mobile.app.model.User;
-import mobile.app.model.UserPublic;
+import mobile.app.model.UserMin;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -88,12 +90,13 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 		if (product.getDescription()==null) {
 			product =  mockProduct();
 		}
-		product.setCreateBy(UserPublic.parseUser(userRepository.getByUsername(username)));
+		product.setCreateBy(UserMin.parseUser(userRepository.getByUsername(username)));
 		product.setCreateAt(new Date());
 		product.setCommentsCount(0);
 		product.setLikesCount(0);
 		product.setDislikesCount(0);
 		product.setRate(0D);
+		product.setTags(Arrays.asList((product.getName() + " " + product.getBrand()).toLowerCase().split(" ")));
 		return productRepository.save(product);
 	}
 	
@@ -126,8 +129,8 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 					productLikes = new ProductLikes();
 					productLikes.setLikeStatus(status);
 					productLikes.setCreateAt(new Date());
-					productLikes.setProduct(product);
-					productLikes.setUser(user);
+					productLikes.setProduct(ProductMin.parseProduct(product));
+					productLikes.setUser(UserMin.parseUser(user));
 					productLikeRepository.save(productLikes);
 					switch (status) {
 						case 1:

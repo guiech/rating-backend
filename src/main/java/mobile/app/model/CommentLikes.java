@@ -1,13 +1,13 @@
 package mobile.app.model;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import java.util.Date;
 
 @Document(collection = "commentLikes")
 public class CommentLikes {
@@ -21,7 +21,7 @@ public class CommentLikes {
 
 	@DBRef
 	@Indexed
-	private User user;
+	private UserMin user;
 
 	private int likeStatus;
 
@@ -46,11 +46,11 @@ public class CommentLikes {
 		this.comment = comment;
 	}
 
-	public User getUser() {
+	public UserMin getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserMin user) {
 		this.user = user;
 	}
 

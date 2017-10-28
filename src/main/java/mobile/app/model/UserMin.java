@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
-public class UserPublic {
+public class UserMin {
 
     @Id
     public String id;
@@ -12,10 +12,10 @@ public class UserPublic {
     public String name;
     public String username;
 
-    public UserPublic() {
+    public UserMin() {
     }
 
-    public UserPublic(String name, String username) {
+    public UserMin(String name, String username) {
         this.name = name;
         this.username = username;
     }
@@ -44,9 +44,9 @@ public class UserPublic {
         this.id = id;
     }
 
-    public static UserPublic parseUser(User user) {
-        UserPublic userPublic = new UserPublic(user.getName(), user.getUsername());
-        userPublic.setId(user.getId());
-        return userPublic;
+    public static UserMin parseUser(User user) {
+        UserMin userMin = new UserMin(user.getName(), user.getUsername());
+        userMin.setId(user.getId());
+        return userMin;
     }
 }
