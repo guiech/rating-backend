@@ -35,4 +35,6 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
         AggregationResults<AverageResult> res = mongoTemplate.aggregate(agg, Comment.class, AverageResult.class);
         return res.getUniqueMappedResult().getAverage().doubleValue();
     }
+
+    Comment findByProductIdAndUserId(String productId, String userId);
 }

@@ -87,9 +87,6 @@ public class ProductBusinessImpl extends GenericBusiness implements ProductBusin
 
 	@Override
 	public Product saveProduct(Product product, String username) {
-		if (product.getDescription()==null) {
-			product =  mockProduct();
-		}
 		product.setCreateBy(UserMin.parseUser(userRepository.getByUsername(username)));
 		product.setCreateAt(new Date());
 		product.setCommentsCount(0);

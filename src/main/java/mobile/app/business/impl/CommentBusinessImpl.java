@@ -53,24 +53,72 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 	}
 
 	@Override
-	public DBObject saveComment(Comment comment, String productId, String username) {
+	public DBObject getProductCommentByUser(String productId, String username) {
 		DBObject result = new BasicDBObject();
-		Product product = productRepository.findById(productId);
-		if(product != null) {
-			comment.setProduct(ProductMin.parseProduct(product));
-			comment.setCreateBy(UserMin.parseUser(userRepository.getByUsername(username)));
-			comment.setDate(new Date());
-			comment.setLikesCount(0);
-			comment.setDislikesCount(0);
-			commentRepository.save(comment);
-			product.increaseCommentsCount();
-			product.setRate(commentRepository.getStarsAverageByProductId(productId,this.mongoTemplate));
-			productRepository.save(product);
+		final String userId = !username.equals("anonymousUser") ? userRepository.getByUsername(username).getId() : null;
+		if(userId != null) {
+			result.put("comment", commentRepository.findByProductIdAndUserId(productId, userRepository.getByUsername(username).getId()));
 			result.put("success", true);
-			result.put("comment", comment);
 		} else {
 			result.put("success", false);
-			result.put("error", "Product does not exist");
+			result.put("message", "Unauthorized user");
+		}
+		return result;
+	}
+
+	@Override
+	public DBObject saveComment(Comment comment, String productId, String username) {
+		DBObject result = new BasicDBObject();
+		if(comment.getStars() < 1 || comment.getStars() > 5) {
+			result.put("success", false);
+			result.put("message", "Stars value should be between 1 and 5");
+			return result;
+		}
+		Product product = productRepository.findById(productId);
+		if(product != null) {
+			User user = userRepository.getByUsername(username);
+			Comment existingComment = commentRepository.findByProductIdAndUserId(productId, user.getId());
+			if(comment.getId() != null) {
+				if(existingComment != null && comment.getId().equals(existingComment.getId())) {
+					if(existingComment.getCreateBy().getId().equals(user.getId())) {
+						existingComment.setStars(comment.getStars());
+						existingComment.setDate(new Date());
+						existingComment.setText(comment.getText());
+						commentRepository.save(existingComment);
+						product.setRate(commentRepository.getStarsAverageByProductId(productId,this.mongoTemplate));
+						productRepository.save(product);
+						result.put("success", true);
+						result.put("comment", existingComment);
+						// TODO: delete likes and dislikes after editing comment???
+					} else {
+						result.put("success", false);
+						result.put("message", "You can not edit messages from other user");
+					}
+				} else {
+					result.put("success", false);
+					result.put("message", "Un-existing message");
+				}
+			} else {
+				if(existingComment != null) {
+					result.put("success", false);
+					result.put("message", "User already commented this product.");
+				} else {
+					comment.setProduct(ProductMin.parseProduct(product));
+					comment.setCreateBy(UserMin.parseUser(user));
+					comment.setDate(new Date());
+					comment.setLikesCount(0);
+					comment.setDislikesCount(0);
+					commentRepository.save(comment);
+					product.increaseCommentsCount();
+					product.setRate(commentRepository.getStarsAverageByProductId(productId,this.mongoTemplate));
+					productRepository.save(product);
+					result.put("success", true);
+					result.put("comment", comment);
+				}
+			}
+		} else {
+			result.put("success", false);
+			result.put("message", "Product does not exist");
 		}
 		return result;
 	}

@@ -33,6 +33,13 @@ public class CommentRestServiceImpl extends BaseContext implements CommentRestSe
 	}
 
 	@Override
+	@RequestMapping(value ="/user/{productId}",method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public DBObject getProductCommentByUser(@PathVariable String productId) {
+		return commentBusiness.getProductCommentByUser(productId, getAuthInformation().getName());
+	}
+
+	@Override
 	@RequestMapping(value ="/like/{commentId}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public DBObject like(@PathVariable String commentId) {
