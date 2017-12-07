@@ -36,5 +36,5 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
         return res.getUniqueMappedResult().getAverage().doubleValue();
     }
 
-    Comment findByProductIdAndUserId(String productId, String userId);
+    Comment findByProductIdAndCreateById(String productId, String userId);
 }

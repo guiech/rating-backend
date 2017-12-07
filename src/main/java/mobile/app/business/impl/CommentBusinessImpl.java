@@ -57,7 +57,7 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		DBObject result = new BasicDBObject();
 		final String userId = !username.equals("anonymousUser") ? userRepository.getByUsername(username).getId() : null;
 		if(userId != null) {
-			result.put("comment", commentRepository.findByProductIdAndUserId(productId, userRepository.getByUsername(username).getId()));
+			result.put("comment", commentRepository.findByProductIdAndCreateById(productId, userRepository.getByUsername(username).getId()));
 			result.put("success", true);
 		} else {
 			result.put("success", false);
@@ -77,7 +77,7 @@ public class CommentBusinessImpl extends GenericBusiness implements CommentBusin
 		Product product = productRepository.findById(productId);
 		if(product != null) {
 			User user = userRepository.getByUsername(username);
-			Comment existingComment = commentRepository.findByProductIdAndUserId(productId, user.getId());
+			Comment existingComment = commentRepository.findByProductIdAndCreateById(productId, user.getId());
 			if(comment.getId() != null) {
 				if(existingComment != null && comment.getId().equals(existingComment.getId())) {
 					if(existingComment.getCreateBy().getId().equals(user.getId())) {
